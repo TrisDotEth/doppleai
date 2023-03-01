@@ -11,3 +11,10 @@
 /**
  * END --- SETUP TAILWINDCSS EDIT
  */
+
+ @font-face {
+  font-family: "Inter";
+  src: url("../public/Inter-VariableFont_slnt,wght.ttf") format('woff2') tech('variations'), url("../public/Inter-VariableFont_slnt,wght.ttf") format('woff2-variations');
+  font-weight: 100 1000;
+  /* https://web.dev/variable-fonts/, and the Inter font family download from google fonts has a readme with more info*/
+}
