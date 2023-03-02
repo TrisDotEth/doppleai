@@ -38,19 +38,22 @@ const PostBox = () => {
 
   const onSubmit: SubmitHandler<FormValues> = (input: FormValues) => {
     input.user = currentUser.id
+    input.usedAsPost = false
+    input.manualPost = false
+    input.body = 'dsfg'
     createPost({ variables: { input } })
   }
 
   return (
     <div>
-      <h3 className="text-gray-600 text-lg font-light">Leave a Comment</h3>
+      {/* <h3 className="text-gray-600 text-lg font-light">Leave a Comment</h3> */}
       <Form className="mt-4 w-full" onSubmit={onSubmit}>
         <FormError
           error={error}
           titleClassName="font-semibold"
           wrapperClassName="bg-red-100 text-red-900 text-sm p-3 rounded"
         />
-        <Label
+        {/* <Label
           name="user"
           className="text-gray-500 block text-xs font-semibold uppercase"
         >
@@ -87,7 +90,7 @@ const PostBox = () => {
         >
           User
         </Label>
-        <CheckboxField name="usedAsPost"></CheckboxField>
+        <CheckboxField name="usedAsPost"></CheckboxField> */}
 
         {/* <DateField name="whenWillPost"></DateField> */}
 

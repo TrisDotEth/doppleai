@@ -1,8 +1,11 @@
+import { useAuth } from 'src/auth'
+
 type NavbarLayoutProps = {
   children?: React.ReactNode
 }
 
 const NavbarLayout = ({ children }: NavbarLayoutProps) => {
+  const { isAuthenticated, signUp, logOut, logIn } = useAuth()
   return (
     <>
       {/* <MetaTags title="be:Anyone" description={'be:Anyone'} /> */}
@@ -52,6 +55,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
                 {/* <button onClick={() => devMode.setDevMode(!devMode.devMode)}>
                   <SquaresPlusIcon className="h-6 w-6 text-white" />
                 </button> */}
+                {isAuthenticated ? <button className="text-white" onClick={logOut}>logout</button> : (<div><button className="text-white" onClick={signUp}>sign up</button><button className="text-white ml-5" onClick={logIn}>sign in</button></div>) }
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@ import PostBox from 'src/components/PostBox/PostBox'
 import PostsCell from 'src/components/PostsCell'
 
 const HomePage = () => {
-  const { isAuthenticated, signUp, userMetadata, currentUser } = useAuth()
+  const { isAuthenticated, signUp, userMetadata, currentUser, logOut } = useAuth()
   console.dir(userMetadata)
 
   return (
@@ -23,14 +23,10 @@ const HomePage = () => {
       />
       <button onClick={signUp}>sign up</button> */}
 
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <div>
           <PostBox></PostBox>
           <PostsCell></PostsCell>
-        </div>
-      ) : (
-        <div>
-          <button onClick={signUp}>sign up</button>
         </div>
       )}
     </>
