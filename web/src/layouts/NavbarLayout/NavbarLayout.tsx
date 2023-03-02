@@ -57,7 +57,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
           </div>
         </header>
 
-        <main className="mt-10 bg-black">{children}</main>
+        <main className="mt-10 bg-black text-white">{children}</main>
       </div>
     </>
   )
