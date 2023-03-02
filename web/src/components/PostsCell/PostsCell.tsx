@@ -2,6 +2,8 @@ import type { PostsQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import ProfileFeed from '../ProfileFeed/ProfileFeed'
+
 export const QUERY = gql`
   query PostsQuery {
     posts {
@@ -21,11 +23,5 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
-  return (
-    <ul>
-      {posts.map((item) => {
-        return <li key={item.id}>{JSON.stringify(item)}</li>
-      })}
-    </ul>
-  )
+  return <ProfileFeed posts={posts} />
 }

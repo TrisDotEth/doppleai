@@ -43,7 +43,7 @@ const PostBox = () => {
 
   return (
     <div>
-      <h3 className="text-lg font-light text-gray-600">Leave a Comment</h3>
+      <h3 className="text-gray-600 text-lg font-light">Leave a Comment</h3>
       <Form className="mt-4 w-full" onSubmit={onSubmit}>
         <FormError
           error={error}
@@ -52,7 +52,7 @@ const PostBox = () => {
         />
         <Label
           name="user"
-          className="block text-xs font-semibold uppercase text-gray-500"
+          className="text-gray-500 block text-xs font-semibold uppercase"
         >
           User
         </Label>
@@ -64,7 +64,7 @@ const PostBox = () => {
 
         <Label
           name="body"
-          className="mt-4 block text-xs font-semibold uppercase text-gray-500"
+          className="text-gray-500 mt-4 block text-xs font-semibold uppercase"
         >
           Comment
         </Label>
@@ -75,7 +75,7 @@ const PostBox = () => {
         />
         <Label
           name="manualPost"
-          className="block text-xs font-semibold uppercase text-gray-500"
+          className="text-gray-500 block text-xs font-semibold uppercase"
         >
           User
         </Label>
@@ -83,7 +83,7 @@ const PostBox = () => {
 
         <Label
           name="usedAsPost"
-          className="block text-xs font-semibold uppercase text-gray-500"
+          className="text-gray-500 block text-xs font-semibold uppercase"
         >
           User
         </Label>
@@ -93,9 +93,9 @@ const PostBox = () => {
 
         <Submit
           disabled={loading}
-          className="mt-4 block rounded bg-blue-500 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white disabled:opacity-50"
+          className="mb-1 mt-2 inline-flex h-[34px] w-52 items-center justify-center rounded-lg bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd] px-4 text-sm text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2"
         >
-          Submit
+          Post now
         </Submit>
       </Form>
     </div>
