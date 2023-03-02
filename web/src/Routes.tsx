@@ -16,6 +16,8 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
       <Set wrap={NavbarLayout}>
+        <Route path="/datadeletion" page={DatadeletionPage} name="datadeletion" />
+        <Route path="/privacy" page={PrivacypolicyPage} name="privacypolicy" />
         <Route path="/" page={HomePage} name="home" />
         <Route path="/profile" page={ProfilePage} name="profile" />
         <Route notfound page={NotFoundPage} />
