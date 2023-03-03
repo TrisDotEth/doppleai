@@ -2,6 +2,8 @@ import type { PostsQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import ProfileHeader from 'src/components/ProfileHeader/ProfileHeader'
+
 import ProfileFeed from '../ProfileFeed/ProfileFeed'
 
 export const QUERY = gql`
@@ -23,5 +25,10 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ posts }: CellSuccessProps<PostsQuery>) => {
-  return <ProfileFeed posts={posts} />
+  return (
+    <div>
+      {/* <ProfileHeader /> */}
+      <ProfileFeed posts={posts} />
+    </div>
+  )
 }

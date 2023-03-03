@@ -45,9 +45,9 @@ const PostBox = () => {
   }
 
   return (
-    <div>
+    <div className="mx-auto block w-96 text-center">
       {/* <h3 className="text-gray-600 text-lg font-light">Leave a Comment</h3> */}
-      <Form className="mt-4 w-full" onSubmit={onSubmit}>
+      <Form className="mt-4" onSubmit={onSubmit}>
         <FormError
           error={error}
           titleClassName="font-semibold"
