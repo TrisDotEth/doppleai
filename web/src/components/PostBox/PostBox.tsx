@@ -35,7 +35,9 @@ const PostBox = () => {
   const [createPost, { loading, error }] = useMutation(CREATE, {
     refetchQueries: [{ query: PostsQuery }],
   })
-
+  const formLoading = loading
+  debugger;
+  console.log(loading)
   const onSubmit: SubmitHandler<FormValues> = (input: FormValues) => {
     input.user = currentUser.id
     input.usedAsPost = false
@@ -98,7 +100,7 @@ const PostBox = () => {
           disabled={loading}
           className="mb-1 mt-2 inline-flex h-[34px] w-52 items-center justify-center rounded-lg bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd] px-4 text-sm text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2"
         >
-          Post now
+          {formLoading ? 'Loading' : 'Post now'}
         </Submit>
       </Form>
     </div>

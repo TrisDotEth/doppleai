@@ -32,9 +32,9 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
               <div className="flex flex-shrink-0 items-center">
                 <h1 className="block w-auto pt-2 text-base font-medium text-white">
                   <span style={{ textShadow: '#222 1px 1px 5px' }}>
-                    dopple:
+                    dopple
                   </span>
-                  <span style={{ textShadow: '#222 1px 1px 5px' }}>Tris</span>
+                  {isAuthenticated &&<span style={{ textShadow: '#222 1px 1px 5px' }}>:Tris</span>}
                   <span>
                     {/* <img
                           className=" mx-1 inline-block h-6 w-6 rounded-full drop-shadow-xl"

@@ -6,7 +6,8 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
-  title = "Redwood App"
+  host = '0.0.0.0'
+  title = "Dopple"
   port = 8910
   apiUrl = "/.netlify/functions"
   includeEnvironmentVariables = ["CLERK_PUBLISHABLE_KEY"] # any ENV vars that should be available to the web side, see https://redwoodjs.com/docs/environment-variables#web

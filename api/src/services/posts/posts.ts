@@ -5,7 +5,11 @@ import { db } from 'src/lib/db'
 import { generateAction } from '../generateAction/generateAction'
 
 export const posts: QueryResolvers['posts'] = () => {
-  return db.post.findMany()
+  return db.post.findMany({
+    orderBy: [{
+      id: 'desc'
+    }]
+  })
 }
 
 export const post: QueryResolvers['post'] = ({ id }) => {

@@ -6,13 +6,24 @@ export const generateAction = async ({ input }) => {
   })
   const openai = new OpenAIApi(configuration)
 
+  const user = context.currentUser.firstName
   console.log(input)
-  const completion = await openai.createCompletion({
-    model: 'text-davinci-002',
-    prompt:
-      'Write a short facebook post celebrating writing great code. You have these atrributes: Name: Tris, Sex: Male, Age: 35',
+  const completion = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are an AI clone of the user. You reply as if you are the user. Your name is '+ context.currentUser.firstName,
+      },
+      {
+        role: 'user',
+        content: 'Write a very short post about how you like being me'
+      },
+    ],
+    max_tokens: 256
   })
-  console.log(completion.data.choices[0].text)
-  input.body = completion.data.choices[0].text
+  console.log('Message is - ', completion.data.choices[0].message)
+  console.log('Full completion object - ', completion)
+  input.body = completion.data.choices[0].message.content
   return input
 }
