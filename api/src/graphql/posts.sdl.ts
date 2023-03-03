@@ -7,10 +7,14 @@ export const schema = gql`
     usedAsPost: Boolean!
     whenWillPost: DateTime!
     createdAt: DateTime!
+    profileImageUrl: String
+    firstName:       String
+    lastName:        String
   }
 
   type Query {
     posts: [Post!]! @requireAuth
+    userPosts(firstName: String!): [Post!]! @requireAuth
     post(id: Int!): Post @requireAuth
   }
 

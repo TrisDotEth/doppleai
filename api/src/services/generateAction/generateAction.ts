@@ -17,7 +17,7 @@ export const generateAction = async ({ input }) => {
       },
       {
         role: 'user',
-        content: 'Write a very short post about how you like being me'
+        content: 'Write a very short funny post about how eager you are to start posting cool stuff'
       },
     ],
     max_tokens: 256

@@ -11,7 +11,9 @@ import {
 import { useMutation } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
+import { QUERY as userPosts } from 'src/components/ProfilePostsCell'
 import { QUERY as PostsQuery } from 'src/components/PostsCell'
+import { useLocation } from '@redwoodjs/router'
 
 const CREATE = gql`
   mutation CreatePostMutation($input: CreatePostInput!) {
@@ -31,9 +33,10 @@ interface FormValues {
 }
 
 const PostBox = () => {
+  const {pathname} = useLocation()
   const { currentUser } = useAuth()
   const [createPost, { loading, error }] = useMutation(CREATE, {
-    refetchQueries: [{ query: PostsQuery }],
+    refetchQueries: [{ query: userPosts, variables:{firstName:pathname.slice(1)}}, {query: PostsQuery }],
   })
   const formLoading = loading
   debugger;

@@ -1,22 +1,24 @@
-const ProfileHeader = () => {
+const ProfileHeader = ({user}) => {
+  console.log('Profile header user is - ', user)
+  // debugger;
   return (
     <div>
       <div className="mb-6">
         <div className=" mx-auto block w-96">
           <img
             className=" mb-1 mr-4 inline-block h-32 w-32 rounded-full align-top"
-            // src={anyone.profiles[0].importedData.pfp.url}
+            src={user.profileImageUrl}
             alt=""
           />
           <div className="inline-block w-[62%]">
             <h3 className="mt-0 text-4xl font-semibold text-white">
-              Display Name
+              {user.firstName}
             </h3>
             <p className="mt-[-2px] mb-3 text-xs text-gray">
-              be:OfficialName
+              dopple:{user.firstName}
               {/* <LinkIcon className="ml-[2px] inline h-3 w-3 " /> */}
             </p>
-            <p className=" text-sm text-white">Bio text</p>
+            <p className=" text-sm text-white">Bio text goes here!</p>
           </div>
         </div>
 
