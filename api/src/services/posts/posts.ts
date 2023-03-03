@@ -14,9 +14,9 @@ export const posts: QueryResolvers['posts'] = () => {
 }
 
 export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
-
+  console.log('User posts fired')
   const ttt = await clerk.users.getUserList()
-  // debugger;
+  console.log('Got past clerk')
   const singleUser = ttt.filter(user => user.firstName == firstName)
   const userId = singleUser[0].id
 
