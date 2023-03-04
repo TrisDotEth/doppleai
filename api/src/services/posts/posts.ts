@@ -1,5 +1,5 @@
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import clerk from '@clerk/clerk-sdk-node'
+import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
@@ -7,31 +7,36 @@ import { generateAction } from '../generateAction/generateAction'
 
 export const posts: QueryResolvers['posts'] = () => {
   return db.post.findMany({
-    orderBy: [{
-      id: 'desc'
-    }]
+    orderBy: [
+      {
+        id: 'desc',
+      },
+    ],
   })
 }
 
 export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
   console.log('User posts fired')
   const ttt = await clerk.users.getUserList()
+  console.log('userPosts service fired - clerk users are:', ttt)
   console.log('Got past clerk')
-  const singleUser = ttt.filter(user => user.firstName == firstName)
+  const singleUser = ttt.filter((user) => user.firstName == firstName)
   const userId = singleUser[0].id
 
-  let posts = await db.post.findMany({
-      where: {
-        user: userId
+  const posts = await db.post.findMany({
+    where: {
+      user: userId,
+    },
+    orderBy: [
+      {
+        id: 'desc',
       },
-      orderBy: [{
-        id: 'desc'
-      }]
-    })
+    ],
+  })
 
   console.log('posts raw', posts)
   const updatedWithProfileImage = (posts) => {
-    posts.map(post => {
+    posts.map((post) => {
       post.profileImageUrl = singleUser[0].profileImageUrl
       post.firstName = singleUser[0].firstName
       post.lastName = singleUser[0].lastName
@@ -82,8 +87,6 @@ export const createPost: MutationResolvers['createPost'] = async ({
     inputUpdatedWithPost.firstName = userDetails.firstName
     inputUpdatedWithPost.lastName = userDetails.lastName
   }
-
-
 
   return db.post.create({
     data: inputUpdatedWithPost,

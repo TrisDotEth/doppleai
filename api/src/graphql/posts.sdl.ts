@@ -8,14 +8,14 @@ export const schema = gql`
     whenWillPost: DateTime!
     createdAt: DateTime!
     profileImageUrl: String
-    firstName:       String
-    lastName:        String
+    firstName: String
+    lastName: String
   }
 
   type Query {
-    posts: [Post!]! @requireAuth
-    userPosts(firstName: String!): [Post!]! @requireAuth
-    post(id: Int!): Post @requireAuth
+    posts: [Post!]! @skipAuth
+    userPosts(firstName: String!): [Post!]! @skipAuth
+    post(id: Int!): Post @skipAuth
   }
 
   input CreatePostInput {

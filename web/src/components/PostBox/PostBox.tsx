@@ -8,12 +8,12 @@ import {
   SubmitHandler,
   CheckboxField,
 } from '@redwoodjs/forms'
+import { useLocation } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
-import { QUERY as userPosts } from 'src/components/ProfilePostsCell'
 import { QUERY as PostsQuery } from 'src/components/PostsCell'
-import { useLocation } from '@redwoodjs/router'
+import { QUERY as userPosts } from 'src/components/ProfilePostsCell'
 
 const CREATE = gql`
   mutation CreatePostMutation($input: CreatePostInput!) {
@@ -33,13 +33,15 @@ interface FormValues {
 }
 
 const PostBox = () => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const { currentUser } = useAuth()
   const [createPost, { loading, error }] = useMutation(CREATE, {
-    refetchQueries: [{ query: userPosts, variables:{firstName:pathname.slice(1)}}, {query: PostsQuery }],
+    refetchQueries: [
+      { query: userPosts, variables: { firstName: pathname.slice(1) } },
+      { query: PostsQuery },
+    ],
   })
   const formLoading = loading
-  debugger;
   console.log(loading)
   const onSubmit: SubmitHandler<FormValues> = (input: FormValues) => {
     input.user = currentUser.id
