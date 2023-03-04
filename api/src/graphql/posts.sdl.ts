@@ -13,9 +13,9 @@ export const schema = gql`
   }
 
   type Query {
-    posts: [Post!]! @skipAuth
-    userPosts(firstName: String!): [Post!]! @skipAuth
-    post(id: Int!): Post @skipAuth
+    posts: [Post!]! @requireAuth
+    userPosts(firstName: String!): [Post!]! @requireAuth
+    post(id: Int!): Post @requireAuth
   }
 
   input CreatePostInput {
