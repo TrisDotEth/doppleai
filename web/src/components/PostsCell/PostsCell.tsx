@@ -12,6 +12,10 @@ export const QUERY = gql`
       id
       body
       user
+      profileImageUrl
+      firstName
+      lastName
+      createdAt
     }
   }
 `

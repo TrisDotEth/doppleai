@@ -8,22 +8,27 @@ export const generateAction = async ({ input }) => {
 
   const user = context.currentUser.firstName
   console.log(input)
+  // debugger
   const completion = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     messages: [
       {
         role: 'system',
-        content: 'You are an AI clone of the user. You reply as if you are the user. Your name is '+ context.currentUser.firstName,
+        content:
+          'You are an AI clone of the user. You reply as if you are the user. Your name is ' +
+          context.currentUser.firstName,
       },
       {
         role: 'user',
-        content: 'Write a very short funny post about how eager you are to start posting cool stuff'
+        content:
+          'Write a very short funny post about how eager you are to start posting cool stuff',
       },
     ],
-    max_tokens: 256
+    max_tokens: 256,
   })
   console.log('Message is - ', completion.data.choices[0].message)
-  console.log('Full completion object - ', completion)
+  // console.log('Full completion object - ', completion)
+  // debugger
   input.body = completion.data.choices[0].message.content
   return input
 }

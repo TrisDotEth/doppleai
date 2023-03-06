@@ -1,4 +1,4 @@
-const ProfileHeader = ({user}) => {
+const ProfileHeader = ({ user }) => {
   console.log('Profile header user is - ', user)
   // debugger;
   return (

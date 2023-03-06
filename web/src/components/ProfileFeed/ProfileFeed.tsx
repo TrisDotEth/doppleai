@@ -1,10 +1,14 @@
-import type { PostsQuery } from 'types/graphql'
+// import type { PostsQuery } from 'types/graphql'
 
-import { useAuth } from 'src/auth'
+import { Link, routes } from '@redwoodjs/router'
+
+// import { useAuth } from 'src/auth'
+
+import Time from '../Time/Time'
 
 const ProfileFeed = ({ posts }) => {
   console.log(posts)
-  const { userMetadata } = useAuth()
+  // const { userMetadata } = useAuth()
   return (
     <div>
       <ul className="divide-gray-200">
@@ -23,11 +27,13 @@ const ProfileFeed = ({ posts }) => {
 
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center ">
-                    <h3 className="text-sm font-semibold text-white">
-                      {post.firstName} {post.lastName}
-                    </h3>
+                    <Link to={routes.profile({ name: post.firstName })}>
+                      <h3 className="text-sm font-semibold text-white">
+                        {post.firstName} {post.lastName}
+                      </h3>
+                    </Link>
                     <p className="text-gray-400 pl-1 text-sm text-gray">
-                      {/* • <Time time={post.timestamp} /> */}• 5m
+                      • <Time time={post.createdAt} />
                     </p>
                   </div>
                   <p className="text-gray-700 text-sm text-white">

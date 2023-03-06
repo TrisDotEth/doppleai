@@ -3400,6 +3400,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@heroicons/react@npm:^2.0.16":
+  version: 2.0.16
+  resolution: "@heroicons/react@npm:2.0.16"
+  peerDependencies:
+    react: ">= 16"
+  checksum: daed283947a4b2a5d8e15d1431ce2feaa7ffc36b116dd26471769cd030249046c212382f0ac50ad6cf2724b912c93e78fc64d66f4e0ec3ffbe30b23237fe65a9
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.8":
   version: 0.11.8
   resolution: "@humanwhocodes/config-array@npm:0.11.8"
@@ -8146,6 +8155,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "api@workspace:api"
   dependencies:
+    "@heroicons/react": ^2.0.16
     "@redwoodjs/api": 4.2.1
     "@redwoodjs/auth-clerk-api": 4.2.1
     "@redwoodjs/graphql-server": 4.2.1
@@ -15906,6 +15916,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"javascript-time-ago@npm:^2.5.9":
+  version: 2.5.9
+  resolution: "javascript-time-ago@npm:2.5.9"
+  dependencies:
+    relative-time-format: ^1.1.6
+  checksum: c7a7aaf5fb5615c175ece1e77da8b2964f4924170b9d1cf4ae586343624f9e09141403f2548600ba95fad3175ebf30fe74e022a3ee4cfd83cc42c6bb028c0c5d
+  languageName: node
+  linkType: hard
+
 "jest-changed-files@npm:^29.4.3":
   version: 29.4.3
   resolution: "jest-changed-files@npm:29.4.3"
@@ -20961,6 +20980,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"relative-time-format@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "relative-time-format@npm:1.1.6"
+  checksum: d0784eda966ebf256c5585f67786435c611972406abcabebca0d4489e28cba7523a40c8c9725a7a089c5f33a20c16d537068a909ed91da275feed9d8607e70f0
+  languageName: node
+  linkType: hard
+
 "relay-runtime@npm:12.0.0":
   version: 12.0.0
   resolution: "relay-runtime@npm:12.0.0"
@@ -24433,6 +24459,7 @@ __metadata:
     "@redwoodjs/web": 4.2.1
     "@tailwindcss/forms": ^0.5.3
     autoprefixer: ^10.4.13
+    javascript-time-ago: ^2.5.9
     postcss: ^8.4.21
     postcss-loader: ^7.0.2
     prop-types: 15.8.1

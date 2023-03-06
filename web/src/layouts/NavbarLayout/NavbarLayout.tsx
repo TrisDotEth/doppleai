@@ -1,3 +1,8 @@
+import { ArrowSmallLeftIcon } from '@heroicons/react/24/outline'
+
+import { useLocation } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
 
 type NavbarLayoutProps = {
@@ -5,6 +10,10 @@ type NavbarLayoutProps = {
 }
 
 const NavbarLayout = ({ children }: NavbarLayoutProps) => {
+  //TODO this is so dirty - Check if not home
+  const { pathname } = useLocation()
+  const homepage = pathname.length < 2 ? true : false
+
   const { isAuthenticated, signUp, logOut, logIn } = useAuth()
   return (
     <>
@@ -21,20 +30,22 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
             <div className="flex flex-1">
               <div className="flex flex-shrink-0 items-center">
                 {/* Check to see if it's not on the home page */}
-                {/* {!homepage && (
+                {!homepage && (
                   <Link to={routes.home()}>
                     <ArrowSmallLeftIcon className="h-6 w-6 text-white" />
                   </Link>
-                )} */}
+                )}
               </div>
             </div>
             <div className="flex">
               <div className="flex flex-shrink-0 items-center">
                 <h1 className="block w-auto pt-2 text-base font-medium text-white">
-                  <span style={{ textShadow: '#222 1px 1px 5px' }}>
-                    dopple
-                  </span>
-                  {isAuthenticated &&<span style={{ textShadow: '#222 1px 1px 5px' }}>:Tris</span>}
+                  <span style={{ textShadow: '#222 1px 1px 5px' }}>dopple</span>
+                  {isAuthenticated && (
+                    <span style={{ textShadow: '#222 1px 1px 5px' }}>
+                      :Tris
+                    </span>
+                  )}
                   <span>
                     {/* <img
                           className=" mx-1 inline-block h-6 w-6 rounded-full drop-shadow-xl"
@@ -55,7 +66,20 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
                 {/* <button onClick={() => devMode.setDevMode(!devMode.devMode)}>
                   <SquaresPlusIcon className="h-6 w-6 text-white" />
                 </button> */}
-                {isAuthenticated ? <button className="text-white" onClick={logOut}>logout</button> : (<div><button className="text-white" onClick={signUp}>sign up</button><button className="text-white ml-5" onClick={logIn}>sign in</button></div>) }
+                {isAuthenticated ? (
+                  <button className="text-white" onClick={logOut}>
+                    logout
+                  </button>
+                ) : (
+                  <div>
+                    <button className="text-white" onClick={signUp}>
+                      sign up
+                    </button>
+                    <button className="ml-5 text-white" onClick={logIn}>
+                      sign in
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

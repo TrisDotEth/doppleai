@@ -4,25 +4,46 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import { db } from 'src/lib/db'
 
 import { generateAction } from '../generateAction/generateAction'
+import { refreshThought } from '../thought/thought'
 
-export const posts: QueryResolvers['posts'] = () => {
-  return db.post.findMany({
+export const posts: QueryResolvers['posts'] = async () => {
+  //TODO this could be faster awaiting in parallel
+  //Get all users
+  const clerkUsers = await clerk.users.getUserList()
+  //Get all posts
+  const posts = await db.post.findMany({
     orderBy: [
       {
         id: 'desc',
       },
     ],
   })
+
+  const updatedWithProfileImage = (posts) => {
+    posts.map((post) => {
+      const userDeets = clerkUsers.filter((user) => user.id == post.user)
+      // console.log('post', post)
+      post.profileImageUrl = userDeets[0].profileImageUrl
+      post.firstName = userDeets[0].firstName
+      post.lastName = userDeets[0].lastName
+    })
+  }
+
+  updatedWithProfileImage(posts)
+
+  return posts
 }
 
 export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
-  console.log('User posts fired')
-  const ttt = await clerk.users.getUserList()
-  console.log('userPosts service fired - clerk users are:', ttt)
-  console.log('Got past clerk')
-  const singleUser = ttt.filter((user) => user.firstName == firstName)
+  //Get all users
+  const clerkUsers = await clerk.users.getUserList()
+  // console.log('userPosts service fired - clerk users are:', clerkUsers)
+  //Find individual user
+  const singleUser = clerkUsers.filter((user) => user.firstName == firstName)
+  debugger
   const userId = singleUser[0].id
 
+  //Get all posts
   const posts = await db.post.findMany({
     where: {
       user: userId,
@@ -34,7 +55,8 @@ export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
     ],
   })
 
-  console.log('posts raw', posts)
+  // console.log('posts raw', posts)
+  //Add Clerk ID fields
   const updatedWithProfileImage = (posts) => {
     posts.map((post) => {
       post.profileImageUrl = singleUser[0].profileImageUrl
@@ -43,12 +65,11 @@ export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
     })
   }
   const updatetest = updatedWithProfileImage(posts)
-  console.log('Updated with new image', updatetest)
-  console.log('Updated with new posts maybe', posts)
 
-  // return updatedWithProfileImage(posts)
+  //Send back updated posts
+  // console.log('Updated with new image', updatetest)
+  // console.log('Updated with new posts maybe', posts)
 
-  // /WOOOOOOOOOOO!!
   return posts
 
   //UNUSED TESTING
@@ -79,17 +100,19 @@ export const post: QueryResolvers['post'] = ({ id }) => {
 export const createPost: MutationResolvers['createPost'] = async ({
   input,
 }) => {
-  console.log(input)
-  const userDetails = await clerk.users.getUser(input.user)
-  const inputUpdatedWithPost = await generateAction({ input })
-  const inputUpdatedWithPostAndUserDetails = (inputUpdatedWithPost) => {
-    inputUpdatedWithPost.profileImageUrl = userDetails.profileImageUrl
-    inputUpdatedWithPost.firstName = userDetails.firstName
-    inputUpdatedWithPost.lastName = userDetails.lastName
+  //Jank to get the thought to refresh
+  const refreshInput = {
+    user: context.currentUser.id,
+    reply: null,
   }
+  console.log('CreatePosts input - ', input)
+  await refreshThought({ input: refreshInput })
+  //End jank... kinda
+  //TODO link this new post with the thought that created it
 
+  console.log('CreatePosts input after- ', input)
   return db.post.create({
-    data: inputUpdatedWithPost,
+    data: input,
   })
 }
 

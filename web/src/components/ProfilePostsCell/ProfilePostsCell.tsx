@@ -1,10 +1,11 @@
 import type { UserPostsQuery } from 'types/graphql'
+
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+
 import ProfileFeed from '../ProfileFeed/ProfileFeed'
 
-
 export const QUERY = gql`
-  query UserPostsQuery ($firstName: String!) {
+  query UserPostsQuery($firstName: String!) {
     userPosts(firstName: $firstName) {
       id
       body
@@ -12,6 +13,7 @@ export const QUERY = gql`
       profileImageUrl
       firstName
       lastName
+      createdAt
     }
   }
 `

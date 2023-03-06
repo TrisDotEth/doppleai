@@ -20,3 +20,16 @@ model Post {
   whenWillPost    DateTime @default(now())
   createdAt       DateTime @default(now())
 }
+
+model Thought {
+  id              Int      @id @default(autoincrement())
+  body            String
+  user            String
+  usedAsPost      Boolean
+  reply           String?
+  profileImageUrl String?
+  firstName       String?
+  lastName        String?
+  whenWillPost    DateTime @default(now())
+  createdAt       DateTime @default(now())
+}

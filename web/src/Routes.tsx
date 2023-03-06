@@ -7,7 +7,7 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Set, Router, Route, Private } from '@redwoodjs/router'
+import { Set, Router, Route } from '@redwoodjs/router'
 
 import { useAuth } from './auth'
 import NavbarLayout from './layouts/NavbarLayout/NavbarLayout'
