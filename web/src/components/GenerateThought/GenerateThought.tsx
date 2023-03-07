@@ -19,9 +19,9 @@ const GenerateThought = () => {
     think()
   }, [])
 
-  const [createThought, { data, loading, error }] = useMutation(CREATE)
+  const [createThought, { error }] = useMutation(CREATE)
 
-  if (loading) return 'Submitting...'
+  // if (loading) return 'Submitting...'
   if (error) return `Submission error! ${error.message}`
 
   const think = () => {

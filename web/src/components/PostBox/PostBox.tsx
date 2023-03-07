@@ -36,26 +36,45 @@ interface FormValues {
 }
 
 const PostBox = ({ thought }) => {
-  // const refetchQueries = [{ query: PostsQuery }, { query: thought }]
-  // if (pathname !== '') {
-  //   refetchQueries.push({
-  //     query: userPosts,
-  //     variables: { firstName: pathname.slice(1) },
-  //   })
-  // }
-
   const { pathname } = useLocation()
+  const refetchQueries = [{ query: PostsQuery }, { query: ThoughtQuery }]
+  if (pathname.slice(1) !== '') {
+    debugger
+    refetchQueries.push({
+      query: UserPostsQuery,
+      // @ts-expect-error: Doesn't have variables. CBF to investigate. My typescfript understanding aint there yet
+      variables: { firstName: pathname.slice(1) },
+    })
+  }
+
+  //working
+  // refetchQueries: [
+  //   { query: UserPostsQuery, variables: { firstName: pathname.slice(1) } },
+  //   { query: ThoughtQuery },
+  //   { query: PostsQuery },
+  // ],
+
   const { currentUser } = useAuth()
   const [createPost, { loading, error }] = useMutation(CREATE, {
-    refetchQueries: [
-      { query: UserPostsQuery, variables: { firstName: pathname.slice(1) } },
-      { query: ThoughtQuery },
-      { query: PostsQuery },
-    ],
+    refetchQueries: refetchQueries,
+    awaitRefetchQueries: true,
   })
 
   const formLoading = loading
-  console.log(loading)
+  const loadingTextArray = [
+    'What else could I do...',
+    "What's next?",
+    'Hmm..., okay.',
+    'Okay next up',
+    'What else could I do...',
+  ]
+
+  //randomly select item from array of strings
+  const randomItem = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)]
+  }
+
+  console.log('Post now loading - ', loading)
   const onSubmit: SubmitHandler<FormValues> = (input: FormValues) => {
     input.user = currentUser.id
     currentUser
@@ -67,7 +86,7 @@ const PostBox = ({ thought }) => {
 
   return (
     // <div className="z-10 mx-auto block w-96 border-y bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd]  py-3 px-4 text-center">
-    <div className="z-10 mx-auto block w-96 border-y border-gray  py-3 px-4 text-center">
+    <div className="z-10 mx-auto mb-6 block border-y border-gray-dark  py-3 px-4 text-center">
       {/* Generate the latest thought if not already made */}
       <GenerateThought />
       <div className="mb-2">
@@ -77,10 +96,12 @@ const PostBox = ({ thought }) => {
           // @ts-expect-error Hardcoded for now, should move to own DB? TODO
           src={currentUser.profileImageUrl}
         ></img>
-        <span className="text-gray">I'll post this in 5 mins</span>
+        <span className="text-gray">
+          {loading ? randomItem(loadingTextArray) : "I'll post this in 5 mins"}
+        </span>
       </div>
 
-      <h2>{thought.body}</h2>
+      <h2>{loading ? '' : thought.body}</h2>
       {/* <ThoughtCell /> */}
       {/* <h3 className="text-gray-600 text-lg font-light">Leave a Comment</h3> */}
       <Form className="mt-4" onSubmit={onSubmit}>

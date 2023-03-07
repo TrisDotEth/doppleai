@@ -1,3 +1,4 @@
+import { UserButton } from '@clerk/clerk-react'
 import { ArrowSmallLeftIcon } from '@heroicons/react/24/outline'
 
 import { useLocation } from '@redwoodjs/router'
@@ -14,7 +15,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
   const { pathname } = useLocation()
   const homepage = pathname.length < 2 ? true : false
 
-  const { isAuthenticated, signUp, logOut, logIn } = useAuth()
+  const { isAuthenticated, signUp, logOut, logIn, currentUser } = useAuth()
   return (
     <>
       {/* <MetaTags title="be:Anyone" description={'be:Anyone'} /> */}
@@ -43,7 +44,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
                   <span style={{ textShadow: '#222 1px 1px 5px' }}>dopple</span>
                   {isAuthenticated && (
                     <span style={{ textShadow: '#222 1px 1px 5px' }}>
-                      :Tris
+                      :{currentUser.firstName}
                     </span>
                   )}
                   <span>
@@ -67,17 +68,15 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
                   <SquaresPlusIcon className="h-6 w-6 text-white" />
                 </button> */}
                 {isAuthenticated ? (
-                  <button className="text-white" onClick={logOut}>
-                    logout
-                  </button>
+                  <UserButton afterSignOutUrl={window.location.href} />
                 ) : (
                   <div>
-                    <button className="text-white" onClick={signUp}>
+                    {/* <button className="text-white" onClick={signUp}>
                       sign up
                     </button>
                     <button className="ml-5 text-white" onClick={logIn}>
                       sign in
-                    </button>
+                    </button> */}
                   </div>
                 )}
               </div>
@@ -85,7 +84,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
           </div>
         </header>
 
-        <main className="mt-10 bg-black text-white">{children}</main>
+        <main className="mt-3 bg-black text-white">{children}</main>
       </div>
     </>
   )

@@ -40,7 +40,6 @@ export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
   // console.log('userPosts service fired - clerk users are:', clerkUsers)
   //Find individual user
   const singleUser = clerkUsers.filter((user) => user.firstName == firstName)
-  debugger
   const userId = singleUser[0].id
 
   //Get all posts

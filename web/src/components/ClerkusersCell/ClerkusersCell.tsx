@@ -1,10 +1,11 @@
 import type { ClerkusersQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+
 import ProfileHeader from 'src/components/ProfileHeader/ProfileHeader'
 
 export const QUERY = gql`
-  query ClerkusersQuery ($firstName: String!)  {
+  query ClerkusersQuery($firstName: String!) {
     clerkuser(firstName: $firstName) {
       firstName
       lastName
@@ -22,9 +23,6 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ clerkuser }: CellSuccessProps<ClerkusersQuery>) => {
-
-  console.log('clerkuser is - ',clerkuser)
-  return (
-    <ProfileHeader user={clerkuser}/>
-  )
+  console.log('clerkuser is - ', clerkuser)
+  return <ProfileHeader user={clerkuser} />
 }
