@@ -42,7 +42,7 @@ export const createThought: MutationResolvers['createThought'] = async ({
       },
     ],
   })
-  console.log('latestThought', latestThought)
+  console.log('latestThought in createThought', latestThought)
   if (latestThought) {
     return latestThought
   } else {
@@ -58,13 +58,13 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   input,
 }) => {
   console.log('Refresh Fired')
-  console.log(input)
+  // console.log(input)
 
-  const latestThought = await db.thought.findFirst()
-  console.log('latestThought in refresh', latestThought)
+  // const latestThought = await db.thought.findFirst()
+  // console.log('latestThought in refresh', latestThought)
 
-  const defer = delay(helloWorld({ input: input }), '5m')
-  console.log('latestThought returned from defer', defer)
+  // const defer = delay(helloWorld({ input: input }), '5m')
+  // console.log('latestThought returned from defer', defer)
 
   input.usedAsPost = false
   const newThought = await generateAction({ input })

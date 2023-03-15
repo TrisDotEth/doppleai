@@ -38,6 +38,7 @@ interface FormValues {
 const PostBox = ({ thought }) => {
   const { pathname } = useLocation()
   const refetchQueries = [{ query: PostsQuery }, { query: ThoughtQuery }]
+  // debugger
   if (pathname.slice(1) !== '') {
     debugger
     refetchQueries.push({
@@ -83,6 +84,9 @@ const PostBox = ({ thought }) => {
     input.body = thought.body
     createPost({ variables: { input } })
   }
+
+  console.log('formLoading - ', formLoading)
+  //TODO add loading state
 
   return (
     // <div className="z-10 mx-auto block w-96 border-y bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd]  py-3 px-4 text-center">

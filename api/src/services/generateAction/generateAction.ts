@@ -14,14 +14,12 @@ export const generateAction = async ({ input }) => {
     messages: [
       {
         role: 'system',
-        content:
-          'You are an AI clone of the user. You reply as if you are the user. Your name is ' +
-          context.currentUser.firstName,
+        content: 'You are an AI clone of the user.',
       },
       {
         role: 'user',
         content:
-          'Write a very short funny post about how eager you are to start posting cool stuff',
+          'You are fun and irreverent. Write a short facebook post, that has no hashtags, pontificating about the world.',
       },
     ],
     max_tokens: 256,
