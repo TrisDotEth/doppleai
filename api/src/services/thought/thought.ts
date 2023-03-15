@@ -63,7 +63,8 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   const latestThought = await db.thought.findFirst()
   console.log('latestThought in refresh', latestThought)
 
-  await helloWorld('Charly')
+  const defer = await helloWorld()
+  console.log('latestThought returned from defer', defer)
 
   input.usedAsPost = false
   const newThought = await generateAction({ input })
