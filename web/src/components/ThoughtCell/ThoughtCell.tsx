@@ -14,7 +14,11 @@ export const QUERY = gql`
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => (
+  <div>
+    <PostBox thought={{ body: 'Pulled kicking and screming from the void' }} />
+  </div>
+)
 
 export const Failure = ({ error }: CellFailureProps<ThoughtQueryVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
