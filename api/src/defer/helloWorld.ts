@@ -1,12 +1,17 @@
 import { defer } from '@defer/client'
 
+import { db } from 'src/lib/db'
+
 // a background function must be `async`
 async function helloWorld(name: string) {
+  const latestThought = await db.thought.findFirst()
   return new Promise((resolve) => {
+    console.log('latestThought in background', latestThought)
+
     setTimeout(() => {
       console.log(`Hello ${name}!`)
       resolve('done')
-    }, 150000000)
+    }, 15000)
   })
 }
 
