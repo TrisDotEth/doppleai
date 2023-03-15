@@ -104,6 +104,7 @@ const PostBox = ({ thought }) => {
       <h2>{loading ? '' : thought.body}</h2>
       {/* <ThoughtCell /> */}
       {/* <h3 className="text-gray-600 text-lg font-light">Leave a Comment</h3> */}
+      <RefreshThought />
       <Form className="mt-4" onSubmit={onSubmit}>
         <FormError
           error={error}
@@ -111,7 +112,6 @@ const PostBox = ({ thought }) => {
           wrapperClassName="bg-red-100 text-red-900 text-sm p-3 rounded"
         />
         <div className="inline-flex items-center justify-center">
-          <RefreshThought />
           <Submit
             disabled={loading}
             className="mb-1 mt-2 inline-flex h-[34px] w-52 items-center justify-center rounded-lg bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd] px-4 text-sm text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2"
