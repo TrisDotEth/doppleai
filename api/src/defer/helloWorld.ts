@@ -1,10 +1,11 @@
 import { defer } from '@defer/client'
 
-import { db } from 'src/lib/db'
+import { createThought } from 'src/services/thought/thought'
 
 // a background function must be `async`
-async function helloWorld() {
-  const latestThought = db.thought.findFirst()
+async function helloWorld(input) {
+  console.log('helloWorld in background input value:', input)
+  const latestThought = createThought({ input })
   console.log('latestThought in background', latestThought)
   return latestThought
 }

@@ -1,4 +1,4 @@
-import { delay } from '@defer.run/client'
+import { delay } from '@defer/client'
 import type { QueryResolvers } from 'types/graphql'
 
 import helloWorld from 'src/defer/helloWorld'
@@ -63,7 +63,7 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   const latestThought = await db.thought.findFirst()
   console.log('latestThought in refresh', latestThought)
 
-  const defer = await helloWorld()
+  const defer = delay(helloWorld({ input: input }), '5m')
   console.log('latestThought returned from defer', defer)
 
   input.usedAsPost = false
