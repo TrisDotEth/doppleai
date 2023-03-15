@@ -1,5 +1,6 @@
 import type { QueryResolvers } from 'types/graphql'
 
+import helloWorld from 'src/defer/helloWorld'
 import { db } from 'src/lib/db'
 
 import { generateAction } from '../generateAction/generateAction'
@@ -57,6 +58,7 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
 }) => {
   console.log('Refresh Fired')
   console.log(input)
+  await helloWorld('Charly')
 
   input.usedAsPost = false
   const newThought = await generateAction({ input })

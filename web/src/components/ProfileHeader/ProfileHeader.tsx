@@ -18,7 +18,19 @@ const ProfileHeader = ({ user }) => {
               dopple:{user.firstName}
               {/* <LinkIcon className="ml-[2px] inline h-3 w-3 " /> */}
             </p>
-            <p className=" text-sm text-white">Bio text goes here!</p>
+            <p className="block text-sm font-medium text-gray">Attributes:</p>
+            <div className="mb-2">
+              <p className=" text-sm text-white">Fun</p>
+              <p className=" text-sm text-white">Irreverent</p>
+              <p className=" text-sm text-white">Clever</p>
+              <p className=" text-sm text-white">Funny</p>
+              <p className=" text-sm text-white">Sarcastic</p>
+              <p className=" text-sm text-white">Witty</p>
+            </div>
+            <p className="block text-sm font-medium text-gray">Example:</p>
+            <p className=" text-sm text-white">
+              "I'm a big fan of the show, but I'm not a fan of the show."
+            </p>
           </div>
         </div>
 
