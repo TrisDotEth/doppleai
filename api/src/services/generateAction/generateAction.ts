@@ -37,7 +37,7 @@ export const generateAction = async ({
       {
         role: 'user',
         content:
-          'Reply to this post - "So its raining today, and I got a scam message… so I wrote a script to spam them with fake passwords. Sending them about 14 a second currently"',
+          'Reply to this post - "AI is the future and I am excited to be a part of it!"',
       },
     ],
     max_tokens: 256,

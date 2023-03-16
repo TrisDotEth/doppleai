@@ -62,10 +62,10 @@ const ProfileDetails = ({ profile }: Props) => {
         }
         <AddAttribute profile={profile} />
       </div>
-      <p className="block text-sm font-medium text-gray">
+      {/* <p className="block text-sm font-medium text-gray">
         Share a post to emulate:
-      </p>
-      <p className="group text-sm text-white">
+      </p> */}
+      {/* <p className="group text-sm text-white">
         {
           //map out values from profile.prompts
           profile.prompts.map((prompt) => {
@@ -75,7 +75,7 @@ const ProfileDetails = ({ profile }: Props) => {
         <p className="invisible text-sm font-medium text-gray group-hover:visible">
           Edit
         </p>
-      </p>
+      </p> */}
     </div>
   )
 }

@@ -16,9 +16,16 @@ export const attribute: QueryResolvers['attribute'] = ({ id }) => {
   })
 }
 
-export const createAttribute: MutationResolvers['createAttribute'] = ({
+export const createAttribute: MutationResolvers['createAttribute'] = async ({
   input,
 }) => {
+  console.log('input before', input)
+  const profileId = await db.profile.findUnique({
+    where: { user: context.currentUser.id },
+  })
+  input.profileId = profileId.id
+  console.log('input after', input)
+
   return db.attribute.create({
     data: input,
   })
