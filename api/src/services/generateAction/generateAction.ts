@@ -36,7 +36,7 @@ export const generateAction = async ({
       },
       {
         role: 'user',
-        content: '"',
+        content: 'Write a post that will not use any hashtags.',
       },
     ],
     max_tokens: 256,
