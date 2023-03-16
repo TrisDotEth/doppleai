@@ -65,9 +65,18 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
 
   // const defer = delay(helloWorld({ input: input }), '5m')
   // console.log('latestThought returned from defer', defer)
+  const profile = await db.profile.findUnique({
+    where: {
+      user: input.user,
+    },
+    include: {
+      attributes: true,
+      prompts: true,
+    },
+  })
 
   input.usedAsPost = false
-  const newThought = await generateAction({ input })
+  const newThought = await generateAction({ input, profile })
   console.log('New thought is - ', newThought)
   return db.thought.create({
     data: newThought,

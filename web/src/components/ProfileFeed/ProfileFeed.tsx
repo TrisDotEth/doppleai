@@ -27,7 +27,7 @@ const ProfileFeed = ({ posts }) => {
 
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center ">
-                    <Link to={routes.profile({ name: post.firstName })}>
+                    <Link to={routes.profilepage({ name: post.firstName })}>
                       <h3 className="text-sm font-semibold text-white">
                         {post.firstName} {post.lastName}
                       </h3>

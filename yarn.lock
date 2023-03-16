@@ -24414,6 +24414,7 @@ __metadata:
     "@tailwindcss/forms": ^0.5.3
     autoprefixer: ^10.4.13
     clsx: ^1.2.1
+    humanize-string: 2.1.0
     javascript-time-ago: ^2.5.9
     postcss: ^8.4.21
     postcss-loader: ^7.0.2

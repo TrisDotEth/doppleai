@@ -4,8 +4,8 @@
 // ```tsx
 // import type { ComponentStory } from '@storybook/react'
 //
-// export const generated: ComponentStory<typeof GenerateThought> = (args) => {
-//   return <GenerateThought {...args} />
+// export const generated: ComponentStory<typeof ProfileDetails> = (args) => {
+//   return <ProfileDetails {...args} />
 // }
 // ```
 //
@@ -13,13 +13,13 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
-import GenerateThought from './GenerateThought'
+import ProfileDetails from './ProfileDetails'
 
 export const generated = () => {
-  return <GenerateThought />
+  return <ProfileDetails />
 }
 
 export default {
-  title: 'Components/GenerateThought',
-  component: GenerateThought,
-} as ComponentMeta<typeof GenerateThought>
+  title: 'Components/ProfileDetails',
+  component: ProfileDetails,
+} as ComponentMeta<typeof ProfileDetails>

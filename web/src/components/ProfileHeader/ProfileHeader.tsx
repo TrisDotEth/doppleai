@@ -1,5 +1,4 @@
-import { PlusSmallIcon } from '@heroicons/react/24/outline'
-import { MinusSmallIcon } from '@heroicons/react/24/outline'
+import ProfilePageCell from 'src/components/ProfilePageCell'
 
 const ProfileHeader = ({ user }) => {
   console.log('Profile header user is - ', user)
@@ -22,42 +21,7 @@ const ProfileHeader = ({ user }) => {
               {/* <LinkIcon className="ml-[2px] inline h-3 w-3 " /> */}
             </p>
             <p className="block text-sm font-medium text-gray">Attributes:</p>
-            <div className="group/menu mb-2">
-              <p className="group text-sm text-white">
-                Fun
-                <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-              </p>
-              <p className="group text-sm text-white">
-                Irreverent{' '}
-                <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-              </p>
-              <p className="group text-sm text-white">
-                Clever{' '}
-                <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-              </p>
-              <p className="group text-sm text-white">
-                Funny{' '}
-                <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-              </p>
-              <p className="group text-sm text-white">
-                Sarcastic{' '}
-                <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-              </p>
-              <p className="group text-sm text-white">
-                Witty{' '}
-                <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-              </p>
-              <PlusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover/menu:visible " />
-            </div>
-            <p className="block text-sm font-medium text-gray">
-              Share a post to emulate:
-            </p>
-            <p className="group text-sm text-white">
-              "I'm a big fan of the show, but I'm not a fan of the show."
-              <p className="invisible text-sm font-medium text-gray group-hover:visible">
-                Edit
-              </p>
-            </p>
+            <ProfilePageCell id={1} />
           </div>
         </div>
 
