@@ -16,6 +16,14 @@ export const profile: QueryResolvers['profile'] = ({ id }) => {
   })
 }
 
+export const profileByUserString: QueryResolvers['profileByUserString'] = ({
+  user,
+}) => {
+  return db.profile.findUnique({
+    where: { user },
+  })
+}
+
 export const createProfile: MutationResolvers['createProfile'] = ({
   input,
 }) => {

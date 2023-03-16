@@ -10,6 +10,7 @@ export const QUERY = gql`
       firstName
       lastName
       profileImageUrl
+      id
     }
   }
 `
@@ -19,7 +20,7 @@ export const Loading = () => <div>Loading...</div>
 export const Empty = () => <div>Empty</div>
 
 export const Failure = ({ error }: CellFailureProps) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+  <div style={{ color: 'red' }}>Errrrrror: {error?.message}</div>
 )
 
 export const Success = ({ clerkuser }: CellSuccessProps<ClerkusersQuery>) => {

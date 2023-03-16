@@ -4,8 +4,11 @@ import type {
   FindProfileById,
 } from 'types/graphql'
 
+import { useLocation } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+
+import { useAuth } from 'src/auth'
 
 import AddAttribute from '../AddAttribute/AddAttribute'
 
@@ -22,6 +25,12 @@ interface Props {
 }
 
 const ProfileDetails = ({ profile }: Props) => {
+  //Ugly and awful way to see if they have permission on  this page
+  const { pathname } = useLocation()
+  const { currentUser } = useAuth()
+  const locationFirstName = pathname.slice(1)
+  const userFirstName = currentUser?.firstName
+
   const [deleteAttribute, loading] = useMutation(DELETE_ATTRIBUTE_MUTATION, {
     onCompleted: () => {
       toast.success('Attribute deleted')
@@ -47,20 +56,23 @@ const ProfileDetails = ({ profile }: Props) => {
               <div key={attribute.id}>
                 <p className="group text-sm text-white">
                   {attribute.attribute}
-
-                  <button
-                    onClick={(e) => {
-                      onDeleteClick(attribute.id, e)
-                    }}
-                  >
-                    <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
-                  </button>
+                  {userFirstName == locationFirstName && (
+                    <button
+                      onClick={(e) => {
+                        onDeleteClick(attribute.id, e)
+                      }}
+                    >
+                      <MinusSmallIcon className="invisible ml-[2px] inline h-5 w-5 group-hover:visible" />
+                    </button>
+                  )}
                 </p>
               </div>
             )
           })
         }
-        <AddAttribute profile={profile} />
+        {userFirstName == locationFirstName && (
+          <AddAttribute profile={profile} />
+        )}
       </div>
       {/* <p className="block text-sm font-medium text-gray">
         Share a post to emulate:

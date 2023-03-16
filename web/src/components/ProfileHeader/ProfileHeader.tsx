@@ -1,8 +1,7 @@
 import ProfilePageCell from 'src/components/ProfilePageCell'
 
 const ProfileHeader = ({ user }) => {
-  console.log('Profile header user is - ', user)
-  // debugger;
+  // console.log('Profile header user is - ', user)
   return (
     <div>
       <div className="mb-6">
@@ -21,7 +20,7 @@ const ProfileHeader = ({ user }) => {
               {/* <LinkIcon className="ml-[2px] inline h-3 w-3 " /> */}
             </p>
             <p className="block text-sm font-medium text-gray">Attributes:</p>
-            <ProfilePageCell id={1} />
+            <ProfilePageCell user={user.id} />
           </div>
         </div>
 

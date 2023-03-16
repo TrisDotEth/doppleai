@@ -1,11 +1,11 @@
 export const schema = gql`
   type ClerkUser {
-    id: Int!
+    id: String!
     body: String!
   }
 
   type ClerkUserTest {
-    id: Int!
+    id: String!
     firstName: String!
     lastName: String!
     profileImageUrl: String!

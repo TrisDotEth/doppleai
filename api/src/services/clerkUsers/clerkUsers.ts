@@ -10,12 +10,12 @@ export const clerkusers: QueryResolvers['clerkusers'] = async () => {
 }
 
 export const clerkuser: QueryResolvers['clerkuser'] = async ({ firstName }) => {
-  console.log('firstName', firstName)
+  // console.log('firstName', firstName)
 
   const ttt = await clerk.users.getUserList()
-  console.log('clerkuser service fired', ttt)
+  // console.log('clerkuser service fired', ttt)
   // debugger;
   const singleUser = ttt.filter((user) => user.firstName == firstName)
-  // debugger;
+  debugger
   return singleUser[0]
 }

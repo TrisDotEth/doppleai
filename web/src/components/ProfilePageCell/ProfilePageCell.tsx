@@ -5,8 +5,8 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import ProfileDetails from '../ProfileDetails/ProfileDetails'
 
 export const QUERY = gql`
-  query FindProfileByIdProfilePage($id: Int!) {
-    profile: profile(id: $id) {
+  query FindProfileByIdProfilePage($user: String!) {
+    profileByUserString: profileByUserString(user: $user) {
       id
       user
       createdAt
@@ -35,6 +35,8 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ profile }: CellSuccessProps<FindProfileById>) => {
-  return <ProfileDetails profile={profile} />
+export const Success = ({
+  profileByUserString,
+}: CellSuccessProps<FindProfileById>) => {
+  return <ProfileDetails profile={profileByUserString} />
 }

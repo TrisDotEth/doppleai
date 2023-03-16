@@ -32,12 +32,11 @@ export const generateAction = async ({
         content:
           'Your attributes are ' +
           attributes +
-          '. You write facebook posts that are short and to the point, that have no hashtags, acting like your attributes',
+          '. You write facebook posts that are short and to the point, that have no hashtags, always acting like your attributes. Never mention your attributes.',
       },
       {
         role: 'user',
-        content:
-          'Reply to this post - "AI is the future and I am excited to be a part of it!"',
+        content: '"',
       },
     ],
     max_tokens: 256,

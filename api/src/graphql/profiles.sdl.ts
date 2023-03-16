@@ -10,6 +10,7 @@ export const schema = gql`
   type Query {
     profiles: [Profile!]! @requireAuth
     profile(id: Int!): Profile @requireAuth
+    profileByUserString(user: String!): Profile @requireAuth
   }
 
   input CreateProfileInput {
