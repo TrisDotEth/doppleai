@@ -15,8 +15,8 @@ import { useAuth } from 'src/auth'
 import { QUERY as PostsQuery } from 'src/components/PostsCell'
 import { QUERY as UserPostsQuery } from 'src/components/ProfilePostsCell'
 import { QUERY as ThoughtQuery } from 'src/components/ThoughtCell'
+import { useGenerateThought } from 'src/hooks/useGenerateThought'
 
-import GenerateThought from '../GenerateThought/GenerateThought'
 import RefreshThought from '../RefreshThought/RefreshThought'
 
 const CREATE = gql`
@@ -37,10 +37,10 @@ interface FormValues {
 
 const PostBox = ({ thought }) => {
   const { pathname } = useLocation()
+  const thoughtGen = useGenerateThought()
+  console.log('thoughtGen - ', thoughtGen)
   const refetchQueries = [{ query: PostsQuery }, { query: ThoughtQuery }]
-  // debugger
   if (pathname.slice(1) !== '') {
-    debugger
     refetchQueries.push({
       query: UserPostsQuery,
       // @ts-expect-error: Doesn't have variables. CBF to investigate. My typescfript understanding aint there yet
@@ -92,7 +92,8 @@ const PostBox = ({ thought }) => {
     // <div className="z-10 mx-auto block w-96 border-y bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd]  py-3 px-4 text-center">
     <div className="z-10 mx-auto mb-6 block border-y border-gray-dark  py-3 px-4 text-center">
       {/* Generate the latest thought if not already made */}
-      <GenerateThought />
+      {/* <GenerateThought />
+       */}
       <div className="mb-2">
         <img
           className=" mx-1 mr-2 inline-block h-7 w-7 rounded-full drop-shadow-xl"

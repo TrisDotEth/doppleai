@@ -1,6 +1,22 @@
 import clsx from 'clsx'
 
 const Tagline = ({ fadeOut }) => {
+  // const tagArr = [
+  //   'Your AI Doppelganger',
+  //   'Your personal AI impersonator',
+  //   'Your AI clone',
+  //   'Your AI twin',
+  //   'Your AI friend',
+  //   'Your AI copy',
+  //   'Your AI avatar',
+  //   'Your AI self',
+  //   'Your AI',
+  //   'Your AI',
+  //   'Your AI',
+  // 'AI Copies of you and your friends',
+
+  // ]
+
   return (
     <div
       className={clsx(
@@ -26,7 +42,7 @@ const Tagline = ({ fadeOut }) => {
         {/* <span className="block text-primary">AI copies</span>
         <span className="text-[44px] text-white"> of you and friends</span> */}
         <span className="block bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd] bg-clip-text text-transparent">
-          AI copies
+          AI clones
         </span>
         <span className="block text-[42px] leading-4 text-white">
           {' '}
