@@ -3,6 +3,7 @@ import type { QueryResolvers } from 'types/graphql'
 
 import helloWorld from 'src/defer/helloWorld'
 import { db } from 'src/lib/db'
+import { randomTime } from 'src/lib/randomTime'
 
 import { generateAction } from '../generateAction/generateAction'
 
@@ -48,6 +49,8 @@ export const createThought: MutationResolvers['createThought'] = async ({
   } else {
     input.usedAsPost = false
     const newThought = await generateAction({ input })
+    //Adda random time for the next thought
+    newThought.whenWillPost = randomTime()
     return db.thought.create({
       data: newThought,
     })
@@ -75,10 +78,83 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
     },
   })
 
+  const olderThought = await db.thought.findFirst({
+    where: {
+      user: input.user,
+      usedAsPost: false,
+    },
+  })
+
+  const updateOldThought = await db.thought.update({
+    where: {
+      id: olderThought.id, // Replace <THOUGHT_ID> with the ID of the thought you want to update
+    },
+    data: {
+      discarded: true,
+    },
+  })
+
+  console.log(updateOldThought)
+
   input.usedAsPost = false
   const newThought = await generateAction({ input, profile })
   console.log('New thought is - ', newThought)
+  //Add a random time for the next thought
+  newThought.whenWillPost = randomTime()
   return db.thought.create({
     data: newThought,
   })
 }
+
+export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
+  async () => {
+    console.log('postReadyThoughts fired')
+    const readyThoughts = await db.thought.findMany({
+      where: {
+        usedAsPost: false,
+        discarded: false,
+        whenWillPost: {
+          lte: new Date(),
+        },
+      },
+    })
+    // debugger
+    //guard clause if there are no readyThoughts
+    if (readyThoughts.length === 0) {
+      return false
+    }
+
+    console.log('readyThoughts', readyThoughts)
+    // debugger
+    // Create an array of Promises for each update operation
+    const updatePromises = readyThoughts.map((thought) => {
+      return db.thought.update({
+        where: {
+          id: thought.id,
+        },
+        data: {
+          usedAsPost: true,
+        },
+      })
+    })
+    // Execute all update operations concurrently using Promise.all()
+    const updatedThoughts = await Promise.all(updatePromises)
+    console.log('updatedThoughts', updatedThoughts)
+    // debugger
+
+    // Map the readyThoughts into an array of post objects
+    const thoughtsToPost = []
+    readyThoughts.forEach((thought) => {
+      delete thought.id
+      delete thought.discarded
+      thoughtsToPost.push(thought)
+    })
+    // debugger
+
+    // Create the posts in the database
+    await db.post.createMany({
+      data: thoughtsToPost,
+    })
+    // debugger
+    return true
+  }

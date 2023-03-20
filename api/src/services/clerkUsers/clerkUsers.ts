@@ -16,6 +16,6 @@ export const clerkuser: QueryResolvers['clerkuser'] = async ({ firstName }) => {
   // console.log('clerkuser service fired', ttt)
   // debugger;
   const singleUser = ttt.filter((user) => user.firstName == firstName)
-  debugger
+  // debugger
   return singleUser[0]
 }

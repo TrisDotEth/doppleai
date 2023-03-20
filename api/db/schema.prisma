@@ -12,8 +12,9 @@ model Post {
   id              Int      @id @default(autoincrement())
   body            String
   user            String
-  manualPost      Boolean
+  manualPost      Boolean  @default(false)
   usedAsPost      Boolean
+  reply           String?
   profileImageUrl String?
   firstName       String?
   lastName        String?
@@ -26,6 +27,7 @@ model Thought {
   body            String
   user            String
   usedAsPost      Boolean
+  discarded       Boolean  @default(false)
   reply           String?
   profileImageUrl String?
   firstName       String?
