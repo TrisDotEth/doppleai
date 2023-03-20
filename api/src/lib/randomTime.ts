@@ -4,7 +4,7 @@ export const randomTime = () => {
 
   // Set the minimum and maximum times (in milliseconds)
   const minTime = now.getTime()
-  const maxTime = now.getTime() + 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+  const maxTime = now.getTime() + 2 * 60 * 60 * 1000 // 24 hours in milliseconds
 
   // Generate a random time between the minimum and maximum times
   const randomTime = Math.floor(Math.random() * (maxTime - minTime)) + minTime
