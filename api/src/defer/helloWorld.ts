@@ -5,9 +5,9 @@ import { postReadyThoughts } from 'src/services/thought/thought'
 
 // a background function must be `async`
 const helloWorld = async () => {
-  console.log('helloWorld in background input value:')
+  console.log('helloWorld running')
   const postReadyThought = await postReadyThoughts()
-  console.log('postReadyThoughts fired, update is:', postReadyThought)
+  console.log('postReadyThoughts fired, return:', postReadyThought)
   // const latestThought = await createThought({ input })
   // console.log('latestThought in background', latestThought)
   // return latestThought

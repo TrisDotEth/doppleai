@@ -122,14 +122,14 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
         },
       },
     })
+    console.log('thought.ts - readyThoughts', readyThoughts)
     // debugger
     //guard clause if there are no readyThoughts
     if (readyThoughts.length === 0) {
-      return 'No readyThoughts found'
+      console.log('No readyThoughts found')
+      return false
     }
 
-    console.log('readyThoughts', readyThoughts)
-    // debugger
     // Create an array of Promises for each update operation
     const updatePromises = readyThoughts.map((thought) => {
       return db.thought.update({
@@ -141,6 +141,8 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
         },
       })
     })
+
+    console.log('updatePromises', updatePromises)
     // Execute all update operations concurrently using Promise.all()
     const updatedThoughts = await Promise.all(updatePromises)
     console.log('updatedThoughts', updatedThoughts)
@@ -155,6 +157,7 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
       thoughtsToPost.push(thought)
     })
     // debugger
+    console.log('thoughtsToPost', thoughtsToPost)
 
     // Create the posts in the database
     await db.post.createMany({
