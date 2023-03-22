@@ -61,7 +61,10 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   input,
 }) => {
   console.log('Refresh Fired')
-  // console.log(input)
+
+  // Used for testing the defer function
+  // await postReadyThoughts()
+  // return
 
   // const latestThought = await db.thought.findFirst()
   // console.log('latestThought in refresh', latestThought)
@@ -77,7 +80,7 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
       prompts: true,
     },
   })
-
+  //maybe passing in the old thought ID would be better. Security though.
   const olderThought = await db.thought.findFirst({
     where: {
       user: input.user,
@@ -108,6 +111,7 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
 
 export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
   async () => {
+    //todo so many db calls...
     console.log('postReadyThoughts fired')
     const readyThoughts = await db.thought.findMany({
       where: {
@@ -121,7 +125,7 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
     // debugger
     //guard clause if there are no readyThoughts
     if (readyThoughts.length === 0) {
-      return false
+      return 'No readyThoughts found'
     }
 
     console.log('readyThoughts', readyThoughts)
@@ -147,6 +151,7 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
     readyThoughts.forEach((thought) => {
       delete thought.id
       delete thought.discarded
+      delete thought.createdAt
       thoughtsToPost.push(thought)
     })
     // debugger
