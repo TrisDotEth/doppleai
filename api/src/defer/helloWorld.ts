@@ -14,4 +14,4 @@ const helloWorld = async () => {
 }
 
 // the function must be wrapped with `defer()` and exported as default
-export default defer.cron(helloWorld, '27 * * * *')
+export default defer.cron(helloWorld, '5 * * * *')
