@@ -63,8 +63,8 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   console.log('Refresh Fired')
 
   // Used for testing the defer function
-  // await postReadyThoughts()
-  // return
+  await postReadyThoughts()
+  return
 
   // const latestThought = await db.thought.findFirst()
   // console.log('latestThought in refresh', latestThought)
@@ -122,11 +122,13 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
         },
       },
     })
+
     console.log('thought.ts - readyThoughts', readyThoughts)
     // debugger
+    // return
     //guard clause if there are no readyThoughts
     if (readyThoughts.length === 0) {
-      console.log('No readyThoughts found')
+      console.log('No readyThoughts found', readyThoughts)
       return false
     }
 
