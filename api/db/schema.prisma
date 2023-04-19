@@ -18,6 +18,8 @@ model Post {
   profileImageUrl String?
   firstName       String?
   lastName        String?
+  Profile         Profile? @relation(fields: [profileId], references: [id])
+  profileId       Int?
   whenWillPost    DateTime @default(now())
   createdAt       DateTime @default(now())
 }
@@ -32,6 +34,8 @@ model Thought {
   profileImageUrl String?
   firstName       String?
   lastName        String?
+  Profile         Profile? @relation(fields: [profileId], references: [id])
+  profileId       Int?
   whenWillPost    DateTime @default(now())
   createdAt       DateTime @default(now())
 }
@@ -41,6 +45,8 @@ model Profile {
   attributes Attribute[]
   user       String      @unique
   prompts    Prompt[]
+  thoughts   Thought[]
+  posts      Post[]
   createdAt  DateTime    @default(now())
 }
 

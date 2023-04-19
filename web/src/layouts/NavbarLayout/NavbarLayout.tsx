@@ -41,7 +41,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
             <div className="flex">
               <div className="flex flex-shrink-0 items-center">
                 <h1 className="block w-auto pt-2 text-base font-medium text-white">
-                  <span style={{ textShadow: '#222 1px 1px 5px' }}>dopple</span>
+                  <span style={{ textShadow: '#222 1px 1px 5px' }}>do</span>
                   {isAuthenticated && (
                     <span style={{ textShadow: '#222 1px 1px 5px' }}>
                       :{currentUser.firstName}

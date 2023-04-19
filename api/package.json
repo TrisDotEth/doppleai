@@ -5,9 +5,9 @@
   "dependencies": {
     "@defer/client": "^1.1.0",
     "@heroicons/react": "^2.0.16",
-    "@redwoodjs/api": "4.3.1",
-    "@redwoodjs/auth-clerk-api": "4.3.1",
-    "@redwoodjs/graphql-server": "4.3.1",
+    "@redwoodjs/api": "4.4.2",
+    "@redwoodjs/auth-clerk-api": "4.4.2",
+    "@redwoodjs/graphql-server": "4.4.2",
     "openai": "^3.2.1"
   }
 }

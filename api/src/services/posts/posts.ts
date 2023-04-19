@@ -2,6 +2,7 @@ import clerk from '@clerk/clerk-sdk-node'
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 
 import { generateAction } from '../generateAction/generateAction'
 import { refreshThought } from '../thought/thought'
@@ -39,7 +40,12 @@ export const userPosts: QueryResolvers['userPosts'] = async ({ firstName }) => {
   const clerkUsers = await clerk.users.getUserList()
   // console.log('userPosts service fired - clerk users are:', clerkUsers)
   //Find individual user
-  const singleUser = clerkUsers.filter((user) => user.firstName == firstName)
+  const singleUser = await clerkUsers.filter(
+    (user) => user.firstName == firstName
+  )
+  if (!singleUser[0]) return false
+  logger.info('singleUser is - ', singleUser[0])
+
   const userId = singleUser[0].id
 
   //Get all posts

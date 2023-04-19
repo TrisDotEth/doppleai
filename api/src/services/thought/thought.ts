@@ -113,19 +113,29 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
   async () => {
     //todo so many db calls...
     console.log('postReadyThoughts fired')
-    const readyThoughts = await db.thought.findMany({
-      where: {
-        usedAsPost: false,
-        discarded: false,
-        whenWillPost: {
-          lte: new Date(),
+    //Get all profiles
+    const profiles = await db.profile.findMany()
+
+    //For each profile get all thoughts that are ready to post
+    const readyThoughts = profiles.map((profile) => {
+      return db.thought.findFirst({
+        where: {
+          id: profile.id,
+          usedAsPost: false,
+          discarded: false,
+          whenWillPost: {
+            lte: new Date(),
+          },
         },
-      },
+      })
     })
 
-    console.log('thought.ts - readyThoughts', readyThoughts)
-    // debugger
-    // return
+    const readyThoughtsPromises = await Promise.all(readyThoughts)
+
+    //TODO MOVE AWAIT PROMISE UP???
+
+    console.log('readyThoughts for every profile', readyThoughts)
+
     //guard clause if there are no readyThoughts
     if (readyThoughts.length === 0) {
       console.log('No readyThoughts found', readyThoughts)
@@ -133,7 +143,7 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
     }
 
     // Create an array of Promises for each update operation
-    const updatePromises = readyThoughts.map((thought) => {
+    const updatePromises = readyThoughtsPromises.map((thought) => {
       return db.thought.update({
         where: {
           id: thought.id,
