@@ -3,6 +3,11 @@ export const schema = gql`
     body: String!
   }
 
+  type ReadyThoughtUpdate {
+    id: Int!
+    succeeded: Boolean!
+  }
+
   type Query {
     thought: Thought @requireAuth
   }
@@ -20,5 +25,6 @@ export const schema = gql`
   type Mutation {
     createThought(input: CreateThoughtInput!): Thought! @requireAuth
     refreshThought(input: RefreshThoughtInput!): Thought! @requireAuth
+    postReadyThoughts: ReadyThoughtUpdate! @requireAuth
   }
 `

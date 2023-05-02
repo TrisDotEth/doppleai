@@ -5,6 +5,7 @@ import { useLocation } from '@redwoodjs/router'
 import { Link, routes } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
+import DEVpostReadyThoughts from 'src/components/DEVpostReadyThoughts/DEVpostReadyThoughts'
 
 type NavbarLayoutProps = {
   children?: React.ReactNode
@@ -61,6 +62,7 @@ const NavbarLayout = ({ children }: NavbarLayoutProps) => {
 
             <div className="flex flex-1 items-center justify-end">
               <div className="flex-shrink-0">
+                <DEVpostReadyThoughts />
                 {/* <ConnectWallet /> */}
                 {/* <WalletIcon className="h-6 w-6 text-white" /> */}
                 {/* Enable Dev mode */}

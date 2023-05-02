@@ -14,22 +14,13 @@ export const generateAction = async ({
   })
   const openai = new OpenAIApi(configuration)
 
-  const testRedditPost = `I have 3 potential winners:
-
-  Elsa on account of having super powers that can be used offensively.
-
-  Mulan on having actual combat training.
-
-  Nala (if you count her) for being a literal lion.
-
-  `
-
   const systemDescription =
     'You are a bot that writes imaginary reddit comments. Follow these rules: ' +
     'Never ask for upvotes. ' +
-    `Do not use formal language like 'futhermore' or 'therefore'. ` +
+    `Do not use formal language like 'futhermore' or 'therefore' or 'critically'. ` +
     `Always write colloquially. ` +
     'Never say thank you. ' +
+    'Always talk in the first person' +
     `Don't refer to yourself. ` +
     'Never mention your attributes. ' +
     'Always act like your attributes are part of your personality. ' +
@@ -48,7 +39,7 @@ export const generateAction = async ({
     attributes = profile.attributes
       .map((value) => value.attribute.toString())
       .join(', ')
-    console.log('ATTRIBUTES are - ', attributes)
+    console.log('ATTRIBUTES are - Happy,', attributes)
   }
   console.log('input is - ', input)
   // debugger
@@ -62,11 +53,8 @@ export const generateAction = async ({
       },
       {
         role: 'user',
-        content:
-          'Write a comment replying to this comment from r/AskReddit: ' +
-          testRedditPost +
-          `
-          /n The reddit post this comment was posted in had this title: 'Which Disney princess would win the Hunger games and why?'.`,
+        // content: `Using your attributes to direct the tone of your reply, write a reddit comment that will get many upvotes replying to this this post from r/askreddit: Pretend this is facebook and share something interesting about you`,
+        content: `Write a post`,
       },
     ],
     max_tokens: 256,

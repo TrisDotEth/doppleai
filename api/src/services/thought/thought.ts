@@ -3,6 +3,7 @@ import type { QueryResolvers } from 'types/graphql'
 
 import helloWorld from 'src/defer/helloWorld'
 import { db } from 'src/lib/db'
+import { logger } from 'src/lib/logger'
 import { randomTime } from 'src/lib/randomTime'
 
 import { generateAction } from '../generateAction/generateAction'
@@ -109,33 +110,23 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   })
 }
 
-export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
+export const postReadyThoughtsOld: MutationResolvers['postReadyThoughtsOld'] =
   async () => {
     //todo so many db calls...
     console.log('postReadyThoughts fired')
-    //Get all profiles
-    const profiles = await db.profile.findMany()
-
-    //For each profile get all thoughts that are ready to post
-    const readyThoughts = profiles.map((profile) => {
-      return db.thought.findFirst({
-        where: {
-          id: profile.id,
-          usedAsPost: false,
-          discarded: false,
-          whenWillPost: {
-            lte: new Date(),
-          },
+    const readyThoughts = await db.thought.findMany({
+      where: {
+        usedAsPost: false,
+        discarded: false,
+        whenWillPost: {
+          lte: new Date(),
         },
-      })
+      },
     })
 
-    const readyThoughtsPromises = await Promise.all(readyThoughts)
-
-    //TODO MOVE AWAIT PROMISE UP???
-
-    console.log('readyThoughts for every profile', readyThoughts)
-
+    console.log('thought.ts - readyThoughts', readyThoughts)
+    // debugger
+    // return
     //guard clause if there are no readyThoughts
     if (readyThoughts.length === 0) {
       console.log('No readyThoughts found', readyThoughts)
@@ -143,7 +134,7 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
     }
 
     // Create an array of Promises for each update operation
-    const updatePromises = readyThoughtsPromises.map((thought) => {
+    const updatePromises = readyThoughts.map((thought) => {
       return db.thought.update({
         where: {
           id: thought.id,
@@ -177,4 +168,104 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
     })
     // debugger
     return true
+  }
+
+export const postReadyThoughtsOld2: MutationResolvers['postReadyThoughtsOld2'] =
+  async () => {
+    try {
+      const currentTime = new Date()
+      const thoughtsToPost = await db.thought.findMany({
+        where: {
+          usedAsPost: false,
+          discarded: false,
+          whenWillPost: {
+            lte: currentTime,
+          },
+        },
+      })
+      for (const thought of thoughtsToPost) {
+        const newPost = await db.post.create({
+          data: {
+            body: thought.body,
+            user: thought.user,
+            usedAsPost: true,
+            reply: thought.reply,
+            profileImageUrl: thought.profileImageUrl,
+            firstName: thought.firstName,
+            lastName: thought.lastName,
+            profileId: thought.profileId,
+            whenWillPost: thought.whenWillPost,
+          },
+        })
+
+        await db.thought.update({
+          where: {
+            id: thought.id,
+          },
+          data: {
+            usedAsPost: true,
+          },
+        })
+
+        logger.info(
+          `Posted thought with ID ${thought.id} as post with ID ${newPost.id}`
+        )
+      }
+      return { id: 1, succeeded: true }
+    } catch (error) {
+      logger.error('Error while checking thoughts to post:', error)
+      return { id: 2, succeeded: false }
+    }
+  }
+
+export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
+  async () => {
+    try {
+      const currentTime = new Date()
+      const thoughtsToPost = await db.thought.findMany({
+        where: {
+          usedAsPost: false,
+          discarded: false,
+          whenWillPost: {
+            lte: currentTime,
+          },
+        },
+      })
+
+      const createPostAndUpdateThoughtPromises = thoughtsToPost.map(
+        async (thought) => {
+          const newPost = await db.post.create({
+            data: {
+              body: thought.body,
+              user: thought.user,
+              usedAsPost: true,
+              reply: thought.reply,
+              profileImageUrl: thought.profileImageUrl,
+              firstName: thought.firstName,
+              lastName: thought.lastName,
+              profileId: thought.profileId,
+              whenWillPost: thought.whenWillPost,
+            },
+          })
+
+          await db.thought.update({
+            where: {
+              id: thought.id,
+            },
+            data: {
+              usedAsPost: true,
+            },
+          })
+
+          logger.info(
+            `Posted thought with ID ${thought.id} as post with ID ${newPost.id}`
+          )
+          await Promise.all(createPostAndUpdateThoughtPromises)
+        }
+      )
+      return { id: 1, succeeded: true }
+    } catch (error) {
+      logger.error('Error while checking thoughts to post:', error)
+      return { id: 2, succeeded: false }
+    }
   }

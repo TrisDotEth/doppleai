@@ -42,18 +42,18 @@ const Tagline = ({ fadeOut }) => {
         {/* <span className="block text-primary">AI copies</span>
         <span className="text-[44px] text-white"> of you and friends</span> */}
         <span className="block bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd] bg-clip-text text-transparent">
-          Autonomous
+          Your AI
         </span>
         <span className="mt-[-40px] mb-3 block bg-gradient-to-r from-[#2f3cc9] to-[#ad52dd] bg-clip-text text-transparent">
-          AI Agents
+          Doppelgangers
         </span>
-        <span className="block text-[42px] leading-4 text-white">
+        {/* <span className="block text-[42px] leading-4 text-white">
           {' '}
           Posting automatically
-        </span>
-        <span className="block text-[42px] leading-[4.5rem] text-white">
+        </span> */}
+        {/* <span className="block text-[42px] leading-[4.5rem] text-white">
           automatically{' '}
-        </span>
+        </span> */}
       </h2>
     </div>
   )
