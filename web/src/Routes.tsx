@@ -17,7 +17,6 @@ import NavbarLayout from './layouts/NavbarLayout/NavbarLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/oneofus" page={OneofusPage} name="oneofus" />
       <Set wrap={ScaffoldLayout} title="Prompts" titleTo="prompts" buttonLabel="New Prompt" buttonTo="newPrompt">
         <Route path="/prompts/new" page={PromptNewPromptPage} name="newPrompt" />
         <Route path="/prompts/{id:Int}/edit" page={PromptEditPromptPage} name="editPrompt" />
@@ -39,6 +38,7 @@ const Routes = () => {
       <Set wrap={NavbarLayout}>
         <Route path="/datadeletion" page={DatadeletionPage} name="datadeletion" />
         <Route path="/privacy" page={PrivacypolicyPage} name="privacypolicy" />
+        <Route path="/oneofus" page={OneofusPage} name="oneofus" />
 
         <Private unauthenticated="oneofus">
           {/* <Route path="/profile" page={ProfilePage} name="profile" /> */}
