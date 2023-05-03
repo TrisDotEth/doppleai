@@ -1,5 +1,5 @@
 import { delay } from '@defer/client'
-import type { QueryResolvers } from 'types/graphql'
+import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import helloWorld from 'src/defer/helloWorld'
 import { db } from 'src/lib/db'
@@ -62,16 +62,6 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   input,
 }) => {
   console.log('Refresh Fired')
-
-  // Used for testing the defer function
-  // await postReadyThoughts()
-  // return
-
-  // const latestThought = await db.thought.findFirst()
-  // console.log('latestThought in refresh', latestThought)
-
-  // const defer = delay(helloWorld({ input: input }), '5m')
-  // console.log('latestThought returned from defer', defer)
   const profile = await db.profile.findUnique({
     where: {
       user: input.user,
@@ -86,7 +76,13 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
     where: {
       user: input.user,
       usedAsPost: false,
+      discarded: false,
     },
+    orderBy: [
+      {
+        id: 'desc',
+      },
+    ],
   })
 
   const updateOldThought = await db.thought.update({
@@ -110,113 +106,113 @@ export const refreshThought: MutationResolvers['refreshThought'] = async ({
   })
 }
 
-export const postReadyThoughtsOld: MutationResolvers['postReadyThoughtsOld'] =
-  async () => {
-    //todo so many db calls...
-    console.log('postReadyThoughts fired')
-    const readyThoughts = await db.thought.findMany({
-      where: {
-        usedAsPost: false,
-        discarded: false,
-        whenWillPost: {
-          lte: new Date(),
-        },
-      },
-    })
+// export const postReadyThoughtsOld: MutationResolvers['postReadyThoughtsOld'] =
+//   async () => {
+//     //todo so many db calls...
+//     console.log('postReadyThoughts fired')
+//     const readyThoughts = await db.thought.findMany({
+//       where: {
+//         usedAsPost: false,
+//         discarded: false,
+//         whenWillPost: {
+//           lte: new Date(),
+//         },
+//       },
+//     })
 
-    console.log('thought.ts - readyThoughts', readyThoughts)
-    // debugger
-    // return
-    //guard clause if there are no readyThoughts
-    if (readyThoughts.length === 0) {
-      console.log('No readyThoughts found', readyThoughts)
-      return false
-    }
+//     console.log('thought.ts - readyThoughts', readyThoughts)
+//     // debugger
+//     // return
+//     //guard clause if there are no readyThoughts
+//     if (readyThoughts.length === 0) {
+//       console.log('No readyThoughts found', readyThoughts)
+//       return false
+//     }
 
-    // Create an array of Promises for each update operation
-    const updatePromises = readyThoughts.map((thought) => {
-      return db.thought.update({
-        where: {
-          id: thought.id,
-        },
-        data: {
-          usedAsPost: true,
-        },
-      })
-    })
+//     // Create an array of Promises for each update operation
+//     const updatePromises = readyThoughts.map((thought) => {
+//       return db.thought.update({
+//         where: {
+//           id: thought.id,
+//         },
+//         data: {
+//           usedAsPost: true,
+//         },
+//       })
+//     })
 
-    console.log('updatePromises', updatePromises)
-    // Execute all update operations concurrently using Promise.all()
-    const updatedThoughts = await Promise.all(updatePromises)
-    console.log('updatedThoughts', updatedThoughts)
-    // debugger
+//     console.log('updatePromises', updatePromises)
+//     // Execute all update operations concurrently using Promise.all()
+//     const updatedThoughts = await Promise.all(updatePromises)
+//     console.log('updatedThoughts', updatedThoughts)
+//     // debugger
 
-    // Map the readyThoughts into an array of post objects
-    const thoughtsToPost = []
-    readyThoughts.forEach((thought) => {
-      delete thought.id
-      delete thought.discarded
-      delete thought.createdAt
-      thoughtsToPost.push(thought)
-    })
-    // debugger
-    console.log('thoughtsToPost', thoughtsToPost)
+//     // Map the readyThoughts into an array of post objects
+//     const thoughtsToPost = []
+//     readyThoughts.forEach((thought) => {
+//       delete thought.id
+//       delete thought.discarded
+//       delete thought.createdAt
+//       thoughtsToPost.push(thought)
+//     })
+//     // debugger
+//     console.log('thoughtsToPost', thoughtsToPost)
 
-    // Create the posts in the database
-    await db.post.createMany({
-      data: thoughtsToPost,
-    })
-    // debugger
-    return true
-  }
+//     // Create the posts in the database
+//     await db.post.createMany({
+//       data: thoughtsToPost,
+//     })
+//     // debugger
+//     return true
+//   }
 
-export const postReadyThoughtsOld2: MutationResolvers['postReadyThoughtsOld2'] =
-  async () => {
-    try {
-      const currentTime = new Date()
-      const thoughtsToPost = await db.thought.findMany({
-        where: {
-          usedAsPost: false,
-          discarded: false,
-          whenWillPost: {
-            lte: currentTime,
-          },
-        },
-      })
-      for (const thought of thoughtsToPost) {
-        const newPost = await db.post.create({
-          data: {
-            body: thought.body,
-            user: thought.user,
-            usedAsPost: true,
-            reply: thought.reply,
-            profileImageUrl: thought.profileImageUrl,
-            firstName: thought.firstName,
-            lastName: thought.lastName,
-            profileId: thought.profileId,
-            whenWillPost: thought.whenWillPost,
-          },
-        })
+// export const postReadyThoughtsOld2: MutationResolvers['postReadyThoughtsOld2'] =
+//   async () => {
+//     try {
+//       const currentTime = new Date()
+//       const thoughtsToPost = await db.thought.findMany({
+//         where: {
+//           usedAsPost: false,
+//           discarded: false,
+//           whenWillPost: {
+//             lte: currentTime,
+//           },
+//         },
+//       })
+//       for (const thought of thoughtsToPost) {
+//         const newPost = await db.post.create({
+//           data: {
+//             body: thought.body,
+//             user: thought.user,
+//             usedAsPost: true,
+//             reply: thought.reply,
+//             profileImageUrl: thought.profileImageUrl,
+//             firstName: thought.firstName,
+//             lastName: thought.lastName,
+//             profileId: thought.profileId,
+//             whenWillPost: thought.whenWillPost,
+//           },
+//         })
 
-        await db.thought.update({
-          where: {
-            id: thought.id,
-          },
-          data: {
-            usedAsPost: true,
-          },
-        })
+//         await db.thought.update({
+//           where: {
+//             id: thought.id,
+//           },
+//           data: {
+//             usedAsPost: true,
+//           },
+//         })
 
-        logger.info(
-          `Posted thought with ID ${thought.id} as post with ID ${newPost.id}`
-        )
-      }
-      return { id: 1, succeeded: true }
-    } catch (error) {
-      logger.error('Error while checking thoughts to post:', error)
-      return { id: 2, succeeded: false }
-    }
-  }
+//         logger.info(
+//           `Posted thought with ID ${thought.id} as post with ID ${newPost.id}`
+//         )
+//       }
+//       return { id: 1, succeeded: true }
+//     } catch (error) {
+//       logger.error('Error while checking thoughts to post:', error)
+//       return { id: 2, succeeded: false }
+//     }
+//   }
 
 export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
   async () => {
@@ -256,6 +252,19 @@ export const postReadyThoughts: MutationResolvers['postReadyThoughts'] =
               usedAsPost: true,
             },
           })
+
+          debugger
+
+          if (thought.user) {
+            const profile = await db.profile.findUnique({
+              where: {
+                user: thought.user,
+              },
+            })
+            debugger
+
+            await refreshThought({ user: profile.user, reply: null })
+          }
 
           logger.info(
             `Posted thought with ID ${thought.id} as post with ID ${newPost.id}`

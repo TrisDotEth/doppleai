@@ -9,8 +9,8 @@ const helloWorld = async () => {
   const postReadyThought = await postReadyThoughts()
   console.log('postReadyThoughts fired, return:', postReadyThought)
 
-  const refreshThoughts = await refreshThought()
-  console.log('refreshThoughts fired, return:', refreshThoughts)
+  // const refreshThoughts = await refreshThought()
+  // console.log('refreshThoughts fired, return:', refreshThoughts)
   // const latestThought = await createThought({ input })
   // console.log('latestThought in background', latestThought)
   // return latestThought
